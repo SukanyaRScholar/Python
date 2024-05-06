@@ -1,0 +1,80 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf500
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww9840\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\ri-340\sl259\slmult1\sa160\partightenfactor0
+
+\f0\fs22 \cf0 CREATE TABLE "Rating" (\
+  "rating_ID"  integer not null,\
+  "rating_AGE\'94  integer not null,\
+  "rating_DESC"  varchar(100) not null,\
+  PRIMARY KEY ("rating_ID")\
+);\
+\
+CREATE TABLE "Recommendatons" (\
+  "recomm_ID"  integer not null,\
+  "recomm_ProgName" varchar(35) not null,\
+  "genre_ID"  integer,\
+  "viewer_ID" integer,\
+  PRIMARY KEY ("recomm_ID")\
+);\
+\
+CREATE INDEX "FK" ON  "Recommendatons" ("genre_ID", "viewer_ID");\
+\
+CREATE TABLE "Streaming" (\
+  "stream_ID"  integer not null,\
+  "stream_Genre"  varchar(30) not null,\
+  "plan_ID"  integer,\
+  "genre_ID" integer,\
+  "rating_ID" integer,\
+  "stream_Watchhistory"  varchar(50),\
+  PRIMARY KEY ("stream_ID")\
+);\
+\
+CREATE INDEX "FK" ON  "Streaming" ("plan_ID", "genre_ID", "rating_ID");\
+\
+CREATE TABLE "Genre" (\
+  "genre_ID"  integer not null,\
+  "genre_Name"  varchar(30) not null,\
+  "genre_Description" varchar(100),\
+  "stream_ID" integer,\
+  PRIMARY KEY ("genre_ID")\
+);\
+\
+CREATE INDEX "FK" ON  "Genre" ("stream_ID");\
+\
+CREATE TABLE "Viewer" (\
+  "viewer_ID"  integer not null,\
+  "viewer_profileName"  varchar(50),\
+  "account_ID" integer,\
+  "rating_ID" integer,\
+  PRIMARY KEY ("viewer_ID")\
+);\
+\
+CREATE INDEX "FK" ON  "Viewer" ("account_ID", "rating_ID");\
+\
+CREATE TABLE "Plan" (\
+  "plan_ID"  integer,\
+  "plan_Descript"  varchar(50),\
+  "plan_Name"  varchar(10) constraint complain check(plan_name in (\'91BASIC\'92, \'91STANDARD\'92,  \'92PREMIUM\'92)),\
+  "plan_Amount" ,\
+  PRIMARY KEY ("plan_ID")\
+);\
+\
+CREATE TABLE "Account" (\
+  "account_ID" <type>,\
+  "account_userName" <type>,\
+  "account_PW" <type>,\
+  "account_Fname" <type>,\
+  "account_Mname" <type>,\
+  "account_Lname" <type>,\
+  "account_creditcardNo" <type>,\
+  "plan_ID" <type>,\
+  PRIMARY KEY ("account_ID")\
+);\
+\
+CREATE INDEX "FK" ON  "Account" ("plan_ID");\
+\
+}
